@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify
-from model import read_data, process_data, train
+from modules.model import read_data, process_data, train
 
 app = Flask(__name__)
 
