@@ -1,4 +1,5 @@
 lending_club_loan_two.csv
+pickles/
 share/
 
 # Created by https://www.toptal.com/developers/gitignore/api/venv,flask,linux,macos,python,windows,intellij+all

@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify
-from modules.model import read_data, process_data, train
+from modules.model import Model
+
 
 app = Flask(__name__)
 
@@ -11,7 +12,6 @@ def approve():
 
 
 if __name__ == "__main__":
-    data = read_data()
-    data = process_data(data)
-    train(data)
+    model = Model()
+    model.train()
     # app.run(debug=True)
