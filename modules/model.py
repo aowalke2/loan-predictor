@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 import pickle
-from modules.data import TrainingData
+from modules.training_data import TrainingData
 
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import MinMaxScaler
@@ -42,11 +42,11 @@ class Model:
         X_test, y_test = test.drop("loan_status", axis=1), test.loan_status
 
         scaler = MinMaxScaler()
-        pickle.dump(scaler, open(self.scaler_file_name, "wb"))
-        self.scaler = scaler
 
         X_train = scaler.fit_transform(X_train)
         X_test = scaler.transform(X_test)
+        pickle.dump(scaler, open(self.scaler_file_name, "wb"))
+        self.scaler = scaler
 
         X_train = np.array(X_train).astype(np.float32)
         X_test = np.array(X_test).astype(np.float32)
@@ -64,15 +64,16 @@ class Model:
         # self.__print_score(y_train, y_train_pred, train=True)
         self.__print_score(y_test, y_test_pred, train=False)
 
-    def predict(self, x):
+    def predict(self, application):
         if not self.scaler:
             self.scaler = pickle.load(open(self.scaler_file_name, "rb"))
-        x = self.scaler.transform(x)
-        x = np.array(x).astype(np.float32)
+        application = self.scaler.transform(application)
+        application = np.array(application).astype(np.float32)
 
         if not self.model:
             self.model = pickle.load(open(self.model_file_name, "rb"))
-        return self.model.predict(x)
+        prediction = self.model.predict(application)
+        return int(prediction)
 
     def __print_score(self, true, pred, train=True):
         if train:

@@ -1,5 +1,5 @@
-from flask import Flask, request, jsonify
-from modules.model import Model
+from flask import Flask, request
+from modules.loan import LoanHandler
 
 
 app = Flask(__name__)
@@ -8,10 +8,13 @@ app = Flask(__name__)
 @app.route("/api/loans/approve", methods=["POST"])
 def approve():
     loan_data = request.get_json()
-    return jsonify(loan_data)
+    handler = LoanHandler()
+    result = handler.handle_request(loan_data)
+    return "approved" if result == 1 else "denied"
 
 
 if __name__ == "__main__":
-    model = Model()
-    model.train()
-    # app.run(debug=True)
+    # model = Model()
+    # model.train()
+
+    app.run(port=8000, debug=True)
