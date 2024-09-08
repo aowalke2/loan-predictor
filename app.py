@@ -10,7 +10,7 @@ def approve():
     loan_data = request.get_json()
     handler = LoanHandler()
     result = handler.handle_request(loan_data)
-    return "approved" if result == 1 else "denied"
+    return "will pay loan" if result == 1 else "will default"
 
 
 if __name__ == "__main__":
