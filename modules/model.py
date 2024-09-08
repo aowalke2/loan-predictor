@@ -73,7 +73,12 @@ class Model:
         if not self.model:
             self.model = pickle.load(open(self.model_file_name, "rb"))
         prediction = self.model.predict(application)
-        return int(prediction)
+        probabilities = self.model.predict_proba(application)
+        return {
+            "prediction": int(prediction),
+            "confidence_0": probabilities[0][0],
+            "confidence_1": probabilities[0][1],
+        }
 
     def __print_score(self, true, pred, train=True):
         if train:
