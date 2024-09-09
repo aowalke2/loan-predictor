@@ -14,7 +14,9 @@ def approve():
 
 
 if __name__ == "__main__":
+    # Un-comment to train
     # model = Model()
     # model.train()
 
+    # Comment out to train
     app.run(port=8000, debug=True)
